@@ -14,9 +14,9 @@ const usersLoginSchema = z.object({
 });
 
 const usersUpdateSchema = z.object({
-  name: z.string().max(20),
-  password: z.string().max(120),
-  email: z.string().email(),
+  name: z.string().max(20).optional(),
+  password: z.string().max(120).optional(),
+  email: z.string().email().optional(),
 });
 
 const usersInfoSchema = z.object({

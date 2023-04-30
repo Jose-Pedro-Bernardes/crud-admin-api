@@ -25,7 +25,7 @@ const verifyingEmailExists = async (
     throw new AppError("E-mail already registered", 409);
   }
 
-  next();
+  return next();
 };
 
 export { verifyingEmailExists };

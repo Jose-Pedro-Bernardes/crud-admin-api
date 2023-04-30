@@ -1,7 +1,18 @@
 import { z } from "zod";
-import { usersCreateSchema, usersInfoSchema } from "../schemas/schemas";
+import {
+  usersCreateSchema,
+  usersInfoSchema,
+  usersUpdateSchema,
+} from "../schemas/schemas";
 
 type TUserCreate = z.infer<typeof usersInfoSchema>;
 type TUserRequest = z.infer<typeof usersCreateSchema>;
+type TUserUpdate = z.infer<typeof usersUpdateSchema>;
 
-export { TUserCreate, TUserRequest };
+interface IUserAdmin {
+  id: number;
+  email: string;
+  admin: boolean;
+}
+
+export { TUserCreate, TUserRequest, TUserUpdate, IUserAdmin };

@@ -5,12 +5,12 @@ import { AppError } from "../error";
 import { QueryResult } from "pg";
 import { IUserResult } from "../interfaces/login.interfaces";
 
-const verifyUserExists = async (
+const verifyingUserExists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const id = req.params.id || req.body.userId;
+  const id = req.params.id;
 
   const queryString: string = format(
     `
@@ -26,7 +26,9 @@ const verifyUserExists = async (
     throw new AppError("User not found", 404);
   }
 
-  res.locals.userExist = user;
+  res.locals.userExists = user;
 
   return next();
 };
+
+export default verifyingUserExists;
