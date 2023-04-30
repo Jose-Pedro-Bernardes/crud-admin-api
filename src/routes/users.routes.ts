@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { createUser, listUsers } from "../controllers/users.controller";
+import {
+  createUser,
+  getUser,
+  listUsers,
+} from "../controllers/users.controller";
 import { verifyingEmailExists } from "../middlewares/ensureVerifyEmailExists.middlewares";
 import verifyingPayload from "../middlewares/ensureBodyIsValid.middlewares";
 import { usersCreateSchema } from "../schemas/schemas";
@@ -14,7 +18,7 @@ usersRouter.post(
   createUser
 );
 usersRouter.get("", verifyingUserToken, listUsers);
-usersRouter.get("/profile");
+usersRouter.get("/profile", verifyingUserToken, getUser);
 usersRouter.patch("/:id");
 usersRouter.delete("/:id");
 usersRouter.put("/:id/recover");
