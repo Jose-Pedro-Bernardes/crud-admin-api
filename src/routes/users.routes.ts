@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createUser } from "../controllers/users.controller";
-import verifyingEmailExists from "../middlewares/ensureVerifyEmailExists.middlewares";
+import { createUser, listUsers } from "../controllers/users.controller";
+import { verifyingEmailExists } from "../middlewares/ensureVerifyEmailExists.middlewares";
 import verifyingPayload from "../middlewares/ensureBodyIsValid.middlewares";
-import { usersCreateSchema } from "../schemas/users.schemas";
+import { usersCreateSchema } from "../schemas/schemas";
+import verifyingUserToken from "../middlewares/ensureVerifyUserToken.middleware";
 
 const usersRouter = Router();
 
@@ -12,7 +13,7 @@ usersRouter.post(
   verifyingEmailExists,
   createUser
 );
-usersRouter.get("");
+usersRouter.get("", verifyingUserToken, listUsers);
 usersRouter.get("/profile");
 usersRouter.patch("/:id");
 usersRouter.delete("/:id");
