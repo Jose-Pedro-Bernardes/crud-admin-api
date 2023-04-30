@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { QueryConfig, QueryResult } from "pg";
 import { client } from "../database";
 import { AppError } from "../error";
+import format from "pg-format";
 
 const verifyingIsActive = async (
   req: Request,
@@ -10,20 +11,14 @@ const verifyingIsActive = async (
 ): Promise<Response | void> => {
   const userId: number = parseInt(req.params.id);
 
-  const queryString: string = `
-        SELECT
-            *
-        FROM
-            users
-        WHERE
-            id = $1;
-   `;
-  const queryConfig: QueryConfig = {
-    text: queryString,
-    values: [userId],
-  };
-  const queryResult = await client.query(queryConfig);
+  const queryString: string = format(
+    `
+    SELECT * FROM users WHERE id = %L;        
+   `,
+    userId
+  );
 
+  const queryResult = await client.query(queryString);
   const user = queryResult.rows[0];
 
   if (user.active === true) {
