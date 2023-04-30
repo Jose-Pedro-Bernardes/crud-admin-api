@@ -2,13 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import format from "pg-format";
 import { client } from "../database";
 import { AppError } from "../error";
+import { TUserCreate, TUserRequest } from "../interfaces/users.interfaces";
+import { QueryResult } from "pg";
 
 const verifyingEmailExists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const payload = req.body;
+  const payload: TUserRequest = req.body;
 
   const queryString = format(
     `
@@ -17,7 +19,7 @@ const verifyingEmailExists = async (
     payload.email
   );
 
-  const queryResult = await client.query(queryString);
+  const queryResult: QueryResult<TUserCreate> = await client.query(queryString);
 
   if (queryResult.rows[0]) {
     throw new AppError("E-mail already registered", 409);
@@ -26,4 +28,4 @@ const verifyingEmailExists = async (
   next();
 };
 
-export default verifyingEmailExists;
+export { verifyingEmailExists };
