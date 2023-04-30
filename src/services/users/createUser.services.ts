@@ -2,7 +2,7 @@ import { TUserRequest } from "../../interfaces/users.interfaces";
 import { hashSync } from "bcryptjs";
 import format from "pg-format";
 import { client } from "../../database";
-import { usersInfoSchema } from "../../schemas/users.schemas";
+import { usersInfoSchema } from "../../schemas/schemas";
 import { QueryResult } from "pg";
 import { TUserCreate } from "../../interfaces/users.interfaces";
 
